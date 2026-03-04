@@ -8,7 +8,7 @@ const CardGrid: React.FC = () => {
     useEffect(() => {
         const fetchConhecimentos = async () => {
             try {
-                const response = await api.get('/skill?limit=4&page=1')
+                const response = await api.get('/skill?limit=8');
                 const data: IInputValues[] = response.data.data;
                 setConhecimentos(data)
                 console.log(data)
