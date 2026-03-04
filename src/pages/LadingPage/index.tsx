@@ -3,6 +3,7 @@ import CardGrid from "../../components/CardGrid";
 
 import React from "react";
 import { ArrowRightIcon } from "@phosphor-icons/react";
+import { useNavigate } from "react-router-dom";
 interface StatItem {
     num: string;
     label: string;
@@ -10,6 +11,7 @@ interface StatItem {
 
 export const LandingPage: React.FC = () => {
 
+    const navigate = useNavigate();
     const STATS: StatItem[] = [
         { num: "2.4k", label: "Especialistas ativos" },
         { num: "180+", label: "Áreas de conhecimento" },
@@ -38,7 +40,7 @@ export const LandingPage: React.FC = () => {
                     </p>
 
                     <div className="flex items-center gap-3">
-                        <button className="inline-flex items-center gap-2 text-[15px] font-semibold text-white bg-blue-600 px-7 py-3.5 rounded-xl hover:bg-blue-700 hover:-translate-y-px hover:shadow-lg hover:shadow-blue-200 transition-all">
+                        <button className="inline-flex items-center gap-2 text-[15px] font-semibold text-white bg-blue-600 px-7 py-3.5 rounded-xl  cursor-pointer hover:bg-blue-700 hover:-translate-y-px hover:shadow-lg hover:shadow-blue-200 transition-all" onClick={() => navigate("/singup")} >
                             Cadastre-se grátis <ArrowRightIcon size={17} weight="bold" />
                         </button>
                     </div>
