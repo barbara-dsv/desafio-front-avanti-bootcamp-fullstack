@@ -21,9 +21,8 @@ export const LandingPage: React.FC = () => {
         <div className="min-h-screen bg-white text-gray-900 font-sans">
             <Header />
 
-            {/* Hero */}
             <section className="flex items-center gap-16 px-16 pt-20 pb-16 max-w-screen-xl mx-auto">
-                {/* Copy */}
+
                 <div className="flex-1">
                     <h1 className="font-serif text-[58px] font-bold leading-[1.1] tracking-tight text-gray-900 mb-5">
                         Aprenda e ensine
@@ -45,7 +44,6 @@ export const LandingPage: React.FC = () => {
                         </button>
                     </div>
 
-                    {/* Stats */}
                     <div className="flex gap-8 mt-12 pt-8 border-t border-gray-100">
                         {STATS.map((s) => (
                             <div key={s.label}>
