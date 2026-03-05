@@ -1,4 +1,4 @@
-import Navbar from "../../components/NavBar";
+import Header from "../../components/Header";
 import CardGrid from "../../components/CardGrid";
 
 import React from "react";
@@ -19,7 +19,7 @@ export const LandingPage: React.FC = () => {
     ];
     return (
         <div className="min-h-screen bg-white text-gray-900 font-sans">
-            <Navbar />
+            <Header />
 
             {/* Hero */}
             <section className="flex items-center gap-16 px-16 pt-20 pb-16 max-w-screen-xl mx-auto">
