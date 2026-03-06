@@ -112,7 +112,7 @@ export const LoginPage: React.FC = () => {
                     <p className="text-[13px] text-gray-400">
                         Não tem conta?{" "}
                         <button className="text-blue-600 font-semibold hover:underline bg-none border-none 
-                        cursor-pointer"onClick={() => navigate("/")}>
+                        cursor-pointer"onClick={() => navigate("/singup")}>
                             Criar conta
                         </button>
                     </p>
