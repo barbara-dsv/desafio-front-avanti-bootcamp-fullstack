@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ArrowRightIcon, EnvelopeIcon, EyeIcon, EyeSlashIcon, LockIcon } from "@phosphor-icons/react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -6,20 +6,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
 import InputField from "../../components/InputField";
+import { AuthContext } from "../../context/AuthContext";
 
 
 
 
 
 const schema = yup.object({
-    //Campos de cadastro de pessoa
-
-
     email: yup.string().email("Email inválido").required("Este campo deve ser preenchido"),
-
     senha: yup.string().min(8, "A senha deve conter no mínimo 8 caracteres").required("Este campo deve ser preenchido"),
-    //Campos de cadastro de conhecimento
-
 }).required();
 
 
@@ -28,6 +23,7 @@ export type ISignupFormData = yup.InferType<typeof schema>;
 
 export const LoginPage: React.FC = () => {
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext)!;
 
     const [showPass, setShowPass] = useState<boolean>(false);
 
@@ -35,25 +31,26 @@ export const LoginPage: React.FC = () => {
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = async (data: ISignupFormData) => {
+    const onSubmit = async (input: ISignupFormData) => {
+
         try {
-
-
-            const resLogin = await api.post("/login", {
-                email: data.email,
-                senha: data.senha
+            const { data } = await api.post("/login", {
+                email: input.email,
+                senha: input.senha
             });
-
-            const token = resLogin.data.token;
-            localStorage.setItem("token", token);
+            console.log(data);
+            if (data?.token) {
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("id", data.person.id);
+                login(data.token);
+            }
             alert("Login realizado com sucesso!")
             reset();
 
-            
+
 
         } catch (error) {
             console.log(error);
-            alert("Email ou senha inválidos")
         }
     };
     return (

@@ -2,17 +2,15 @@ import { createBrowserRouter, createRoutesFromElements, Route } from "react-rout
 import { LandingPage } from "./pages/LadingPage";
 import { SignupPage } from "./pages/SingUp";
 import {LoginPage} from "./pages/LoginPage";
-import ListarUsuarios from "./pages/ListarUsuarios/ListarUsuarios";
-
+//import {DashboardPage} from "./pages/dashboardPage";
 
 export const routes = createBrowserRouter(
     createRoutesFromElements(
        <Route>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/singup" element={<SignupPage />} />
+      <Route path="/signup" element={<SignupPage />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/listarusuarios" element={<ListarUsuarios />}/>
-
-      </Route>
+      
+    </Route>
     )
 )
