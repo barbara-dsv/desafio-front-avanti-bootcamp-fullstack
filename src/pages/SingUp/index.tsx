@@ -7,6 +7,7 @@ import api from "../../services/api";
 import SectionTitle from "../../components/SectionTitle";
 import FormConhecimento from "../../components/FormConhecimento";
 import FormPessoa from "../../components/FormPessoa";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -28,7 +29,7 @@ export type ISignupFormData = yup.InferType<typeof schema>;
 
 export const SignupPage: React.FC = () => {
 
-
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<ISignupFormData>({
         resolver: yupResolver(schema),
     });
@@ -118,7 +119,7 @@ export const SignupPage: React.FC = () => {
                 <div className="flex items-center justify-between mt-9 pt-7 border-t border-blue-100">
                     <p className="text-[13px] text-gray-400">
                         Já tem conta?{" "}
-                        <button className="text-blue-600 font-semibold hover:underline bg-none border-none cursor-pointer">
+                        <button className="text-blue-600 font-semibold hover:underline bg-none border-none cursor-pointer" onClick={() => navigate("/login")}>
                             Entrar
                         </button>
                     </p>
