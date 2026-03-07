@@ -1,40 +1,51 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
 import type { Person } from "../../interfaces/UsuariosIterface";
 import type { IInputValues } from "../../interfaces/ConhecimentoInterface";
 
 const EditarPerson: React.FC = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
+  const personFromState = location.state?.person;
+
   const [person, setPerson] = useState<Person | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
 
   // Buscar os dados do usuário
   useEffect(() => {
+    if (personFromState) {
+      setPerson(personFromState);
+      setNome(personFromState.nome);
+      setEmail(personFromState.email);
+
+      setIsLoading(false);
+      return;
+    }
+
     const fetchPerson = async () => {
       try {
-        
         const token = localStorage.getItem("token");
         if (!token) {
           alert("Você precisa estar logado!");
           navigate("/login");
           return;
         }
-
         const response = await api.get(`/person/${id}`, {
-          headers: { Authorization: token },
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         setPerson(response.data);
-        setNome(response.data.nome);
-        setEmail(response.data.email);
-      } catch (error) {
-        console.log(error);
-        alert("Erro ao buscar usuário");
+        setNome(response.data.nome || "");
+        setEmail(response.data.email || "");
+      } catch (error: any) {
+        console.log("Erro ao buscar:", error.response || error);
+        alert("Aviso: Dados não encontrados");
         navigate("/listarusuarios");
       } finally {
         setIsLoading(false);
@@ -42,7 +53,7 @@ const EditarPerson: React.FC = () => {
     };
 
     fetchPerson();
-  }, [id, navigate]);
+  }, [id, navigate, personFromState]);
 
   // Função para salvar alterações
   const salvarUsuario = async () => {
@@ -88,16 +99,18 @@ const EditarPerson: React.FC = () => {
         </h1>
 
         <div className="flex flex-col gap-4">
-          <label className="text-sm font-semibold text-gray-700">Nome:</label>
+          <label htmlFor="nome" className="text-sm font-semibold text-gray-700">Nome:</label>
           <input
+            id="nome"
             type="text"
             value={nome}
             onChange={(e) => setNome(e.target.value)}
             className="border px-3 py-2 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
 
-          <label className="text-sm font-semibold text-gray-700">Email:</label>
+          <label htmlFor="email" className="text-sm font-semibold text-gray-700">Email:</label>
           <input
+            id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
