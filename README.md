@@ -1,73 +1,100 @@
-# React + TypeScript + Vite
+KnowHub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend da plataforma KnowHub, desenvolvido com React + TypeScript, que permite aos usuários visualizar e gerenciar seus conhecimentos. Ele se conecta a uma API RESTful externa para realizar login, cadastro, listagem, edição e exclusão de usuários.
 
-Currently, two official plugins are available:
+🚀 Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Tela de login e cadastro com autenticação via JWT.
 
-## React Compiler
+Visualização de usuários e seus conhecimentos.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Edição e exclusão do próprio perfil e conhecimentos.
 
-## Expanding the ESLint configuration
+Cards responsivos para exibir usuários e conhecimentos.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Feedback visual com loading spinners durante chamadas à API.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+🛠 Tecnologias utilizadas
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+React.js + TypeScript – Framework moderno e tipado.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Vite – Bundler rápido e eficiente.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Tailwind CSS – Estilização responsiva e consistente.
+
+React Router Dom – Navegação entre páginas.
+
+React Spinners – Feedback visual de carregamento.
+
+Axios – Comunicação com o backend via API RESTful.
+
+
+🚀Hospedagem e deploy:
+
+Vercel 
+
+
+💻 Pré-requisitos
+
+Node.js >= 18
+
+npm 
+
+⚡ Instalação e execução
+
+Clone o repositório:
+
+git clone https://github.com/barbara-dsv/desafio-front-avanti-bootcamp-fullstack.git
+cd knowhub-frontend
+
+Instale as dependências:
+
+npm install
+
+🎯Para ter acesso ao nosso backend acesse o link do repositório:´
+
+https://github.com/barbara-dsv/desafio-bootcamp-avanti-backend
+
+Inicie o projeto com Vite:
+
+npm run dev
+
+Configure a URL da API no arquivo .env (exemplo):
+
+VITE_API_URL=https://seu-backend.vercel.app
+
+Acesse no navegador: http://localhost:5173
+
+🎨 Estilo e UX
+
+Cards padronizados para usuários e conhecimentos.
+
+Botões com hover e animações suaves.
+
+Layout responsivo para desktop e mobile.
+
+Paleta de cores KnowHub aplicada com Tailwind CSS.
+
+🔐 Segurança
+
+Armazena o token JWT para autenticação.
+
+Usuário só pode visualizar e alterar seus próprios dados.
+
+Rotas protegidas no frontend conforme o token JWT.
+
+📈 Por que usar KnowHub (Frontend)
+
+“O frontend KnowHub oferece uma interface intuitiva e moderna, conectando os usuários de forma eficiente à API, garantindo que cada pessoa possa gerenciar e oferecer seus conhecimentos de forma segura e responsiva.”
+
+👩‍💻 Desenvolvedores
+
+Bárbara Lourenço
+Bruna Melo
+Raimunda Nonata 
+
+📄 Licença
+
+MIT License
