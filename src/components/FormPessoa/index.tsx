@@ -21,7 +21,6 @@ const FormPessoa: React.FC<FormConhecimentoProps> = ({ register, errors }) => {
                     type="text"
                     placeholder="Seu nome aqui"
                     register={register("nome")}
-                    error={errors.nome?.message}
                 />
 
                 <InputField
@@ -30,9 +29,7 @@ const FormPessoa: React.FC<FormConhecimentoProps> = ({ register, errors }) => {
                     type="tel"
                     placeholder="(00) 00000-0000"
                     register={register("telefone")}
-                    error={errors.telefone?.message}
                 />
-
 
                 <div className="mb-4">
                     <label htmlFor="descricao_pessoa" className="block text-[13px] font-semibold text-gray-700 mb-1.5">
@@ -50,6 +47,7 @@ const FormPessoa: React.FC<FormConhecimentoProps> = ({ register, errors }) => {
                         className="w-full pl-10 pr-4 py-2.5 text-sm text-gray-900 bg-gray-50 border-[1.5px] border-gray-200 rounded-xl outline-none resize-none transition-all placeholder:text-gray-300 focus:border-blue-400 focus:bg-white focus:shadow-[0_0_0_3px_rgba(96,165,250,0.15)]"
                         {...register("descricao_pessoa")}
                     />
+
                 </div>
             </div>
 
@@ -62,14 +60,13 @@ const FormPessoa: React.FC<FormConhecimentoProps> = ({ register, errors }) => {
                 type="email"
                 placeholder="seu@email.com"
                 register={register("email")}
-                error={errors.email?.message}
             />
 
             <InputField
                 label="Senha"
                 icon={<LockIcon size={16} />}
                 type={showPass ? "text" : "password"}
-                placeholder="Mínimo 8 caracteres"
+                placeholder="Mínimo 8 caracteres com letras e números"
                 register={register("senha")}
                 error={errors.senha?.message}
             >
@@ -81,6 +78,11 @@ const FormPessoa: React.FC<FormConhecimentoProps> = ({ register, errors }) => {
                     {showPass ? <EyeIcon size={16} /> : <EyeSlashIcon size={16} />}
                 </button>
             </InputField>
+            {errors.senha?.message && (
+                <p className="mt-1 text-xs text-red-500 font-medium">
+                    {String(errors.senha.message)}
+                </p>
+            )}
         </div>
     )
 };
