@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import type { Person } from "../../interfaces/UsuariosIterface";
 
 interface CardPersonProps {
@@ -8,6 +8,7 @@ interface CardPersonProps {
 function CardPerson({ person }: CardPersonProps) {
 
   const navigate = useNavigate();
+  const loggedUserId = localStorage.getItem("id");
 
   return (
     <div
@@ -17,7 +18,10 @@ function CardPerson({ person }: CardPersonProps) {
 
       <div className="mt-3">
         <p className="text-sm font-bold text-gray-900">{person.nome}</p>
-        <p className="text-xs text-gray-400 mt-0.5">{person.email}</p>
+        <p className="text-xs text-gray-400 mt-0.5">
+          {loggedUserId !== String(person.id) && (
+            <span className="font-medium text-gray-500">Entre em contato: </span>
+          )} {person.email}</p>
 
         <p className="text-xs font-semibold text-gray-700 mt-3 mb-2">
           Conhecimentos
@@ -36,19 +40,23 @@ function CardPerson({ person }: CardPersonProps) {
       </div>
 
       <div className="flex gap-2 mt-5">
-        <Link
-          to={`/editarperson/${person.id}`}
-          className="w-full text-center text-[11px] font-semibold text-blue-600 bg-blue-50 px-2.5 py-2 rounded-full hover:bg-blue-100 transition"
-        >
-          Editar
-        </Link>
+        {loggedUserId === String(person.id) && (
+          <button
+            onClick={() => navigate(`/editarperson/${person.id}`, { state: { person } })}
+            className="w-full text-center text-[11px] font-semibold text-blue-600 bg-blue-50 px-2.5 py-2 rounded-full hover:bg-blue-100 transition"
+          >
+            Editar
+          </button>
+        )}
 
-        <button
-          onClick={() => navigate(`/deletarperson/${person.id}`)}
-          className="w-full text-center text-[11px] font-semibold text-red-600 bg-red-50 px-2.5 py-2 rounded-full hover:bg-red-100 transition"
-        >
-          Deletar
-        </button>
+        {loggedUserId === String(person.id) && (
+          <button
+            onClick={() => navigate(`/deletarperson/${person.id}`)}
+            className="w-full text-center text-[11px] font-semibold text-red-600 bg-red-50 px-2.5 py-2 rounded-full hover:bg-red-100 transition"
+          >
+            Deletar
+          </button>
+        )}
       </div>
     </div>
   );
