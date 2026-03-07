@@ -20,6 +20,17 @@ const CardGrid: React.FC = () => {
     }, [])
     return (
         <section className="px-16 pb-20 max-w-screen-xl mx-auto">
+
+            <div className="text-center mb-10">
+                <h2 className="font-serif text-4xl font-bold text-blue-700 tracking-tight">
+                    Know<span className="text-blue-400">Hub</span>
+                </h2>
+
+                <p className="text-gray-500 mt-2">
+                    Busque e oferte seu conhecimento aqui!
+                </p>
+            </div>
+
             <p className="text-xs font-bold uppercase tracking-widest text-blue-500 mb-5">
                 Conhecimentos em destaque
             </p>

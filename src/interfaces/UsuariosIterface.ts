@@ -6,5 +6,5 @@ export interface Person{
   id: string;
   nome: string
   email: string;
-  conhecimento?: IInputValues[] | null ;
+  conhecimentos: IInputValues[] | null ;
 }

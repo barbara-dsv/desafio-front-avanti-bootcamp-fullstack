@@ -17,6 +17,7 @@ function ListarPerson() {
       setIsLoading(true);
 
       const resposta = await api.get('/person');
+      console.log(resposta)
 
       setPerson(resposta.data);
 
@@ -42,7 +43,13 @@ function ListarPerson() {
       )}
 
       <div className="flex justify-center w-full my-4">
-        <div className="container flex flex-col">
+  <div className="container flex flex-col">
+
+    <h1 className="font-serif text-3xl text-center font-bold text-blue-700 tracking-tight mb-6">
+      KnowHub 
+      <span className="block text-blue-400 text-lg font-semibold mt-1">
+        Busque e Ofereça seus Conhecimentos Aqui!</span>
+    </h1>
 
           {(!isLoading && person.length === 0) && (
             <span className="text-3xl text-center my-8">
@@ -66,21 +73,3 @@ function ListarPerson() {
 
 export default ListarPerson;
 
-
-
-// --blue-50: #EFF6FF;
-//   --blue-100: #DBEAFE;
-//   --blue-200: #BFDBFE;
-//   --blue-400: #60A5FA;
-//   --blue-500: #3B82F6;
-//   --blue-600: #2563EB;
-//   --blue-700: #1D4ED8;
-//   --blue-900: #1E3A5F;
-//   --white: #FFFFFF;
-//   --gray-50: #F9FAFB;
-//   --gray-100: #F3F4F6;
-//   --gray-300: #D1D5DB;
-//   --gray-400: #9CA3AF;
-//   --gray-500: #6B7280;
-//   --gray-700: #374151;
-//   --gray-900: #111827;
