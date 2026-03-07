@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ArrowRightIcon } from "@phosphor-icons/react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -8,6 +8,7 @@ import SectionTitle from "../../components/SectionTitle";
 import FormConhecimento from "../../components/FormConhecimento";
 import FormPessoa from "../../components/FormPessoa";
 import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
 
 
 
@@ -30,6 +31,7 @@ export type ISignupFormData = yup.InferType<typeof schema>;
 export const SignupPage: React.FC = () => {
 
     const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<ISignupFormData>({
         resolver: yupResolver(schema),
     });
@@ -51,9 +53,13 @@ export const SignupPage: React.FC = () => {
                 senha: data.senha
             });
 
-            const token = resLogin.data.token;
-            localStorage.setItem("token", token);
+            localStorage.clear();
 
+            const token = resLogin.data.token;
+            if (token) {
+                localStorage.setItem("token", token);
+                localStorage.setItem("id", resLogin.data.person.id);
+            }
             const responseConhecimento = await api.post("/skill", {
                 titulo: data.titulo,
                 descricao: data.descricao_conhecimento,
@@ -67,12 +73,19 @@ export const SignupPage: React.FC = () => {
             }
             )
             console.log(responseConhecimento)
+            navigate("/listarusuarios")
             reset()
 
-            alert("Cadastro realizado com sucesso!")
-
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            if (error instanceof AxiosError && error.response) {
+                if (error.response.status === 400) {
+                    setErrorMessage("Email já cadastrado ou dados inválidos.");
+                } else {
+                    setErrorMessage("Ocorreu um erro. Tente novamente.");
+                }
+            } else {
+                setErrorMessage("Erro desconhecido.");
+            }
         }
     };
     return (
@@ -103,6 +116,11 @@ export const SignupPage: React.FC = () => {
                         <form id="signup-form" onSubmit={handleSubmit(onSubmit)}>
                             <FormPessoa register={register} errors={errors} />
                         </form>
+                        {errorMessage && (
+                            <p className="text-red-500 text-sm font-medium mt-2 ">
+                                {errorMessage}
+                            </p>
+                        )}
                     </div>
 
                     <div className="bg-blue-100 mx-auto w-px self-stretch" />
