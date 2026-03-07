@@ -6,11 +6,8 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import InputField from "../../components/InputField";
 import { AuthContext } from "../../context/AuthContext";
+import { AxiosError } from "axios";
 import api from "../../services/api";
-
-
-
-
 
 const schema = yup.object({
     email: yup.string().email("Email inválido").required("Este campo deve ser preenchido"),
@@ -26,6 +23,7 @@ export const LoginPage: React.FC = () => {
     const { login } = useContext(AuthContext)!;
 
     const [showPass, setShowPass] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<ISignupFormData>({
         resolver: yupResolver(schema),
@@ -43,17 +41,23 @@ export const LoginPage: React.FC = () => {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("id", data.person.id);
                 login(data.token);
-
             }
-            alert("Login realizado com sucesso!")
+
             navigate("/listarusuarios")
             reset();
-            
 
 
-
-        } catch (error) {
-            console.log(error);
+        } catch (error: unknown) {
+            if (error instanceof AxiosError && error.response) {
+                if (error.response.status === 400) {
+                    console.log(error.response.data);
+                    setErrorMessage("Email ou senha incorretos.");
+                } else {
+                    setErrorMessage("Ocorreu um erro. Tente novamente.");
+                }
+            } else {
+                setErrorMessage("Erro desconhecido.");
+            }
         }
     };
     return (
@@ -72,7 +76,11 @@ export const LoginPage: React.FC = () => {
                     <h2 className="font-serif text-[30px] font-bold text-gray-900 tracking-tight mt-5 mb-1.5">
                         Login
                     </h2>
-
+                    {errorMessage && (
+                        <p className="text-red-500 text-sm font-medium mt-2 ">
+                            {errorMessage}
+                        </p>
+                    )}
                 </div>
 
 
@@ -123,8 +131,8 @@ export const LoginPage: React.FC = () => {
                         type="submit"
                         form="signup-form"
                         className="inline-flex items-center gap-2 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-blue-700 cursor-pointer px-7 py-3.5 rounded-xl shadow-lg shadow-blue-200 hover:-translate-y-px hover:shadow-xl hover:shadow-blue-300 transition-all">
-                        Entrar<ArrowRightIcon size={16} weight="bold"  
-                        onClick={() => navigate("/listarusuarios")}/>
+                        Entrar<ArrowRightIcon size={16} weight="bold"
+                            onClick={() => navigate("/listarusuarios")} />
                     </button>
                 </div>
             </div>
